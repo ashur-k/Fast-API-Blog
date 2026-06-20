@@ -41,16 +41,20 @@
 - uv run uvicorn main:app --reload
 
 
-### Packages Installed in this project:
-- uv add pillow
-- uv add sqlalchemy
-- uv add "pwdlib[argon2]" pyjwt pydantic-settings
-- uv add aiosmtplib
-- uv add uv add "psycopg[binary]"
+### Project Dependencies:
 
-### Project Settings to Organise Imports:
-- These lines are included to pyproject.toml
+```bash
+uv add pillow
+uv add sqlalchemy
+uv add "passlib[argon2]" pyjwt pydantic-settings
+uv add aiosmtplib
+uv add "psycopg[binary]"
+```
+
+#### The project-level project-level formatting rules in pyproject.toml configuration.
+```toml
 [tool.uv.workspace]
+
 [tool.black]
 line-length = 140
 
@@ -61,8 +65,11 @@ fix = true
 
 [tool.ruff.format]
 quote-style = "double"
+```
 
-### These setting are included in setting.json 
+#### Add setting.json
+#### VS Code is configuration to use Ruff for auto-formatting and linting on save.
+```json
 {
   "editor.formatOnSave": true,
 
@@ -73,7 +80,7 @@ quote-style = "double"
 
   "ruff.lint.run": "onSave"
 }
-
+```
 ### Required VSCode Extensions
 - Ruff (official extension)
 - Ruff (official extension)
