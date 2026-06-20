@@ -1,44 +1,48 @@
-from typing import Annotated
+from datetime import UTC, datetime, timedelta
+from typing import Annotated, List
 
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, status, Query, BackgroundTasks
-from sqlalchemy import select, delete as sql_delete
-
+from fastapi import (
+    APIRouter,
+    BackgroundTasks,
+    Depends,
+    HTTPException,
+    Query,
+    UploadFile,
+    status,
+)
+from fastapi.security import OAuth2PasswordRequestForm
+from PIL import UnidentifiedImageError
+from sqlalchemy import delete as sql_delete
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
+from starlette.concurrency import run_in_threadpool
 
 import models
-from database import get_db
-from schemas import (
-    PostResponse,
-    UserCreate,
-    UserPublic,
-    UserUpdate,
-    UserPrivate,
-    Token,
-    PaginatedPostsResponse,
-    ChangePasswordRequest,
-    ResetPasswordRequest,
-    ForgotPasswordRequest
-)
-from typing import List
-from datetime import timedelta, UTC, datetime
-from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy import func, select
 from auth import (
-    create_access_token,
-    hash_password,
-    verify_password,
     CurrentUser,
+    create_access_token,
     generate_reset_token,
-    hash_reset_token
+    hash_password,
+    hash_reset_token,
+    verify_password,
 )
 from config import settings
-from PIL import UnidentifiedImageError
-from starlette.concurrency import run_in_threadpool
-from image_utils import delete_profile_image, process_profile_image
+from database import get_db
 from email_utils import send_password_reset_email
-
-
+from image_utils import delete_profile_image, process_profile_image
+from schemas import (
+    ChangePasswordRequest,
+    ForgotPasswordRequest,
+    PaginatedPostsResponse,
+    PostResponse,
+    ResetPasswordRequest,
+    Token,
+    UserCreate,
+    UserPrivate,
+    UserPublic,
+    UserUpdate,
+)
 
 router = APIRouter()
 
@@ -183,7 +187,7 @@ async def reset_password(
             detail="Invalid or expired reset token",
         )
 
-    if reset_token.expires_at.replace(tzinfo=UTC) < datetime.now(UTC):
+    if reset_token.expires_at < datetime.now(UTC):
         await db.delete(reset_token)
         await db.commit()
         raise HTTPException(
