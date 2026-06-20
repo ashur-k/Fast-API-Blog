@@ -1,0 +1,33 @@
+[project]
+name = "fastapi-blog"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "aiosmtplib>=5.1.1",
+    "aiosqlite>=0.22.1",
+    "black>=26.5.1",
+    "fastapi[standard]>=0.136.3",
+    "greenlet>=3.5.1",
+    "ipdb>=0.13.13",
+    "pillow>=12.2.0",
+    "psycopg[binary]>=3.3.4",
+    "pwdlib[argon2]>=0.3.0",
+    "pydantic-settings>=2.14.1",
+    "pyjwt>=2.13.0",
+    "ruff>=0.15.18",
+    "sqlalchemy>=2.0.50",
+]
+
+[tool.uv.workspace]
+[tool.black]
+line-length = 140
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I"]  # E/F = linting, I = import sorting
+fix = true
+
+[tool.ruff.format]
+quote-style = "double"
