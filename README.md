@@ -1,23 +1,81 @@
-TODO finsih Corey toutorial on pathlib and https://www.youtube.com/watch?v=AMdG7IjgSPM
+# Thi Blog App:
 
-first install uv on windows machines
-https://docs.astral.sh/uv/getting-started/installation/#cargo
+## Project Setup Guide
+## Install uv on Windows machines
+### https://docs.astral.sh/uv/getting-started/installation/#cargo
 
-then create project folder 
- uv init fastapi_blog --> this will create fast_api blog with some basic files e.g. main.py, myproject.toml, readme.md
+## How to run this project after cloning from GitHub
+- git clone https://github.com/your-username/fastapi_blog.git
+- cd fastapi_blog
+- uv sync
 
- uv init . # if already have folder
+### I have developed this app using this follwing toutorial for learning purposes.
+## Through this project:
+- Authentication and authorization in FastAPI
+- Working with relational databases (SQLAlchemy + PostgreSQL)
+- Security concepts in data validation and serialization
+- Application configuration using environment-based settings [Pydantic-Settings]
+- Structuring a FastAPI project in a scalable way
 
- cd into folder fastapi_blog
+## Project Setup Guide
+## Dev Instructions
+## - uv init fastapi_blog
+### This will create a new project directory with basic files such as:
+- main.py
+- pyproject.toml
+- uv.lock
+- README.md
 
- uv add "fastapi[standard]"
+## - uv init .
+### Use this if you are already inside a project directory.
 
- this command will look for virtual env and if it not exist it will automatically create it. and it will install fastapi + some extras into projecct for example fastapi, uvicorn, pydantic, standard asgi server setup tools, it will also update pyproject.toml and uv.lock files automatically.
+## cd fastapi_blog
+## uv add "fastapi[standard]"
+- Automatically creates a virtual environment (if not already present)
+### - Installs FastAPI and required dependencies, including
+- FastAPI
+- Uvicorn (ASGI server)
+- Pydantic (data validation)
+- Standard tooling for FastAPI development
+- Updates: pyproject.toml, uv.lock
 
- uv run fastapi dev main.py -> this command will auto relaod changes into the project if changes made or restarted
+## uv run uvicorn main:app --reload
+### It starts a web server using Uvicorn and automatically reloads the application 
+### to reflect any code changes immediately without restarting.
 
-uv add pillow
-uv add sqlalchemy
+## Packages Installed in this project:
+- uv add pillow
+- uv add sqlalchemy
+- uv add "pwdlib[argon2]" pyjwt pydantic-settings
+- uv add aiosmtplib
+- uv add uv add "psycopg[binary]"
 
-uv add "pwdlib[argon2]" pyjwt pydantic-settings
-uv add aiosmtplib
+## Project Settings to Organise Imports:
+### These lines are included to pyproject.toml
+- [tool.uv.workspace]
+- [tool.black]
+- line-length = 140
+
+- [tool.ruff]
+- line-length = 88
+- select = ["E", "F", "I"]  # E/F = linting, I = import sorting
+- fix = true
+
+- [tool.ruff.format]
+- quote-style = "double"
+
+### These setting are included in setting.json 
+{
+  "editor.formatOnSave": true,
+
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true
+  },
+
+  "ruff.lint.run": "onSave"
+}
+
+## VSCode Extensions
+- Ruff (official extension)
+- Ruff (official extension)
