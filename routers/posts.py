@@ -20,7 +20,6 @@ async def get_posts(
     skip: Annotated[int, Query(ge=0)] = 0,
     limit: Annotated[int, Query(ge=1, le=100)] = 10,
 ):
-    
     count_result = await db.execute(select(func.count()).select_from(models.Post))
     total = count_result.scalar() or 0
 
@@ -75,8 +74,8 @@ async def get_post(post_id: int, db: Annotated[AsyncSession, Depends(get_db)]):
         return post
 
     raise HTTPException(
-        stauts_code=status.HTTP_404_NOT_FOUND,
-        detail="Post Not Found"
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="Post not found"
     )
 
 

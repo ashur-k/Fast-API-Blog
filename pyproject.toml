@@ -32,3 +32,9 @@ fix = true
 
 [tool.ruff.format]
 quote-style = "double"
+
+[dependency-groups]
+dev = [
+    "moto[s3]>=5.2.2",
+    "pytest>=9.1.1",
+]

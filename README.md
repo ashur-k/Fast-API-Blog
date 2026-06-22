@@ -6,8 +6,9 @@
 
 ### How to run this project after cloning from GitHub
 - git clone https://github.com/your-username/fastapi_blog.git
-- cd fastapi_blog
-- uv sync
+- run `cd fastapi_blog`
+- run `uv sync`
+- run `uv run fastapi dev main.py` to start proj in dev mode
 
 ### Through this project:
 - Authentication and authorization in FastAPI
@@ -39,6 +40,7 @@
 - Standard tooling for FastAPI development
 - Updates: pyproject.toml, uv.lock
 - uv run uvicorn main:app --reload
+- uv add --dev "moto[s3]" -> this is not used
 
 
 ### Project Dependencies:
@@ -50,6 +52,7 @@ uv add "passlib[argon2]" pyjwt pydantic-settings
 uv add aiosmtplib
 uv add "psycopg[binary]"
 uv add alembic
+uv add --dev pytest
 ```
 
 #### Project-Level formatting rules in pyproject.toml configuration.
@@ -200,8 +203,13 @@ run `\d posts` to see table structures
 Selcting database directly from windows shell
 run `psql blogdb -U bloguser`
 
+Running Database queries
+run `psql blogdb -U bloguser`
+
+
 #### Alembic Commands
 run `uv run alembic current`
+run `SELECT id, title, likes FROM posts;`
 
 ```
 \fastapi_blog> uv run alembic current
@@ -221,3 +229,12 @@ run `alembic downgrade -1`
 IF required to check where current migrations are:
 run `uv run alembic current`
 run `uv run alembic history`
+
+
+#### Tests
+run ` uv run pytest/ -v` to run all tests
+run `uv run pytest tests/test_users.py -v` to run tests for file
+run `uv run pytest tests/test_users.py::test_create_user_validation_error -v` to run specific test
+run `uv run pytest tests/ -s` for debuggin purposes if you want to show print statements
+
+-v means verbose mode. It makes pytest print more details about the test run.
